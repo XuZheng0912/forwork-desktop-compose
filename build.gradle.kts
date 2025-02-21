@@ -1,13 +1,24 @@
+import org.jetbrains.changelog.ChangelogSectionUrlBuilder
+import org.jetbrains.changelog.date
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("jvm")
-    id("org.jetbrains.compose")
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.changelog)
+
+    alias(libs.plugins.ksp)
 }
 
 group = "com.github.xuzheng0912"
 version = "1.0-SNAPSHOT"
+
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+}
 
 repositories {
     mavenCentral()
@@ -21,6 +32,10 @@ dependencies {
     // (in a separate module for demo project and in testMain).
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
+
+    implementation(libs.sqlite)
+    implementation(libs.bundles.jimmer)
+
 }
 
 compose.desktop {
@@ -33,4 +48,20 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+changelog {
+    version.set(project.version as String)
+    path.set(file("CHANGELOG.md").canonicalPath)
+    println(version.get())
+    header.set(provider { "[${version.get()}] - ${date()}" })
+    headerParserRegex.set("""(\d+\.\d+)""".toRegex())
+    introduction.set("introduction".trimIndent())
+    itemPrefix.set("-")
+    keepUnreleasedSection.set(true)
+    unreleasedTerm.set("[Unreleased]")
+    groups.set(listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"))
+    lineSeparator.set("\n")
+    combinePreReleases.set(true)
+    sectionUrlBuilder.set(ChangelogSectionUrlBuilder { repositoryUrl, currentVersion, previousVersion, isUnreleased -> "foo" })
 }

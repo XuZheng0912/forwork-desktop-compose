@@ -1,24 +1,30 @@
 [versions]
+kotlin = "2.1.0"
 changelog = "2.2.1"
-
-ktor = "3.0.3"
-jnativehook = "2.2.2"
-
+ksp = "2.1.0-1.0.29"
+jimmer = "0.9.55"
+compose = "1.7.3"
+sqlite = "3.49.1.0"
 
 [plugins]
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 
 [libraries]
-#Ktor
-ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
-ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
-
-#JNativeHook
-jnativehook = { module = "com.github.kwhat:jnativehook", version.ref = "jnativehook" }
+jimmer-core-kotlin = { module = "org.babyfish.jimmer:jimmer-core-kotlin", version.ref = "jimmer" }
+jimmer-sql-kotlin = { module = "org.babyfish.jimmer:jimmer-sql-kotlin", version.ref = "jimmer" }
+jimmer-ksp = { module = "org.babyfish.jimmer:jimmer-ksp", version.ref = "jimmer" }
+sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 
 [bundles]
-#Ktor
-ktor = ["ktor-server-core", "ktor-server-netty"]
-
+jimmer = [
+    "jimmer-core-kotlin",
+    "jimmer-sql-kotlin",
+    "jimmer-ksp"
+]
 
 
