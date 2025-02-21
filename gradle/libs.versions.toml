@@ -1,0 +1,24 @@
+[versions]
+changelog = "2.2.1"
+
+ktor = "3.0.3"
+jnativehook = "2.2.2"
+
+
+[plugins]
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+
+[libraries]
+#Ktor
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
+
+#JNativeHook
+jnativehook = { module = "com.github.kwhat:jnativehook", version.ref = "jnativehook" }
+
+[bundles]
+#Ktor
+ktor = ["ktor-server-core", "ktor-server-netty"]
+
+
+
