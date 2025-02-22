@@ -51,9 +51,9 @@ compose.desktop {
 }
 
 changelog {
+    repositoryUrl.set(extra["repositoryUrl"] as String)
     version.set(project.version as String)
     path.set(file("CHANGELOG.md").canonicalPath)
-    println(version.get())
     header.set(provider { "[${version.get()}] - ${date()}" })
     headerParserRegex.set("""(\d+\.\d+)""".toRegex())
     introduction.set("introduction".trimIndent())
